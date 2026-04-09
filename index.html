@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Fábrica de Apps.dev</title>
+    
+    <link rel="icon" type="image/png" href="Icone.png">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            /* --- PALETA ROXO ACADÊMICO / APP ESCOLA --- */
+            --bg-main: #1a0b3b; 
+            --bg-darker: #120829;
+            --primary-purple: #6c3ce9; 
+            --bg-card: rgba(43, 20, 94, 0.6);
+            --neon-green: #39ff14; 
+            --electric-blue: #00e5ff; 
+            --text-pure: #ffffff;
+            --text-gray: #ccc4e0;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-pure);
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            line-height: 1.6;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at top right, rgba(108, 60, 233, 0.2), transparent 40%),
+                radial-gradient(circle at bottom left, rgba(0, 229, 255, 0.1), transparent 40%);
+        }
+
+        header {
+            position: relative;
+            padding: 120px 20px 80px;
+            text-align: center;
+            overflow: hidden;
+            background: linear-gradient(180deg, var(--bg-darker) 0%, transparent 100%);
+        }
+
+        .header-bg-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(108, 60, 233, 0.3) 0%, rgba(57, 255, 20, 0.1) 40%, transparent 70%);
+            filter: blur(60px);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .logo-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 30px;
+        }
+
+        .logo-container img {
+            width: 140px;
+            z-index: 2;
+            position: relative;
+            border-radius: 24%;
+            filter: drop-shadow(0 0 15px var(--primary-purple)) drop-shadow(0 0 30px rgba(57, 255, 20, 0.3));
+            animation: floating 3s ease-in-out infinite;
+        }
+
+        .logo-container::after {
+            content: '';
+            position: absolute;
+            top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border: 2px solid var(--primary-purple);
+            border-radius: 28%;
+            opacity: 0.4;
+            box-shadow: 0 0 15px var(--primary-purple);
+            animation: pulse-border 2s infinite;
+        }
+
+        @keyframes floating {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes pulse-border {
+            0% { transform: scale(1); opacity: 0.4; }
+            50% { transform: scale(1.1); opacity: 0.7; }
+            100% { transform: scale(1); opacity: 0.4; }
+        }
+
+        h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            margin: 0;
+            background: linear-gradient(135deg, #fff 50%, var(--primary-purple) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 span {
+            -webkit-text-fill-color: var(--neon-green);
+            text-shadow: 0 0 20px rgba(57, 255, 20, 0.4);
+        }
+
+        .hero-subtitle {
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 20px auto;
+            font-size: 1.1rem;
+        }
+
+        .trust-bar {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 40px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--electric-blue);
+            font-weight: bold;
+        }
+
+        .catalogo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 50px 20px 80px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 24px;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            overflow: hidden; 
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-purple);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 20px rgba(108, 60, 233, 0.2);
+        }
+
+        /* AJUSTE PARA O CURSOR DE ZOOM */
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 16px;
+            margin-bottom: 20px;
+            cursor: zoom-in;
+            transition: transform 0.3s;
+        }
+
+        .card img:hover {
+            transform: scale(1.02);
+        }
+
+        .badge {
+            background: var(--primary-purple);
+            color: white;
+            padding: 5px 14px;
+            border-radius: 100px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            display: inline-block;
+            margin-bottom: 12px;
+            align-self: flex-start;
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.6rem;
+            margin: 10px 0;
+            color: white;
+        }
+
+        .card p {
+            color: var(--text-gray);
+            font-size: 0.95rem;
+            flex-grow: 1;
+            margin-bottom: 15px;
+        }
+
+        .price-container {
+            text-align: center;
+            margin-top: auto;
+            margin-bottom: 15px;
+        }
+
+        .price-old {
+            font-size: 1rem;
+            color: var(--text-gray);
+            text-decoration: line-through;
+            opacity: 0.7;
+            display: block;
+            margin-bottom: -5px;
+        }
+
+        .price-tag {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: white;
+            display: block;
+        }
+
+        .btn-comprar {
+            display: block;
+            padding: 15px 10px; 
+            background: var(--neon-green);
+            color: #000;
+            text-decoration: none;
+            border-radius: 14px;
+            text-align: center;
+            font-weight: 800;
+            text-transform: uppercase;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(57, 255, 20, 0.2);
+            margin: 0 auto; 
+            width: calc(100% - 20px); 
+            box-sizing: border-box;
+            font-size: 0.9rem;
+        }
+
+        .btn-comprar:hover {
+            transform: scale(1.03);
+            filter: brightness(1.1);
+            box-shadow: 0 8px 25px var(--neon-green);
+        }
+
+        .guarantee-text {
+            font-size: 0.75rem;
+            color: var(--text-gray);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            opacity: 0.8;
+            padding-bottom: 10px;
+        }
+
+        footer {
+            background: linear-gradient(0deg, var(--bg-darker) 0%, transparent 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(108, 60, 233, 0.1);
+            position: relative;
+        }
+
+        .footer-logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 15px;
+            display: inline-block;
+            letter-spacing: -1px;
+        }
+
+        .footer-logo span {
+            color: var(--neon-green);
+        }
+
+        .footer-tagline {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            padding: 10px 20px;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .contact-item:hover {
+            color: #ffffff;
+            border-color: rgba(108, 60, 233, 0.3);
+            background: rgba(108, 60, 233, 0.1);
+            box-shadow: 0 0 15px rgba(108, 60, 233, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .fa-instagram {
+            color: var(--neon-green);
+            font-size: 1.3rem;
+            animation: pulse-insta 2s infinite;
+        }
+        
+        @keyframes pulse-insta {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .fa-envelope {
+            color: var(--electric-blue);
+            font-size: 1.2rem;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .section-header h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 2.2rem;
+            color: #fff;
+        }
+
+        .about-container {
+            max-width: 1000px;
+            margin: 0 auto 80px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            border: 1px solid rgba(108, 60, 233, 0.2);
+        }
+
+        .about-photo {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 3px solid var(--primary-purple);
+            object-fit: cover;
+            box-shadow: 0 0 20px rgba(108, 60, 233, 0.4);
+        }
+
+        .about-text { flex: 1; min-width: 300px; }
+        .about-text h3 { color: var(--neon-green); margin-top: 0; }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .faq-item {
+            background: var(--bg-card);
+            margin-bottom: 10px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .faq-question:hover { background: rgba(108, 60, 233, 0.1); }
+
+        .faq-answer {
+            max-height: 0;
+            padding: 0 20px;
+            color: var(--text-gray);
+            transition: 0.3s ease-out;
+        }
+
+        .social-proof {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto 80px;
+            padding: 0 20px;
+        }
+
+        .testimonial-card {
+            background: rgba(255,255,255,0.02);
+            padding: 20px;
+            border-radius: 20px;
+            border-left: 4px solid var(--neon-green);
+            font-style: italic;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-bg-glow"></div>
+        <div class="logo-container">
+            <img src="Icone.png" alt="Fábrica de Apps.Dev">
+        </div>
+        <div class="reveal">
+            <h1>Fábrica de Apps<span>.Dev</span></h1>
+            <p class="hero-subtitle">Tecnologia de ponta inspirada em sistemas reais. Ferramentas prontas para escalar seu faturamento e sua carreira.</p>
+            <div class="trust-bar">
+                <span>✓ Acesso Imediato</span>
+                <span>✓ Checkout Seguro</span>
+                <span>✓ Suporte Elite</span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="catalogo">
+            <div class="card reveal">
+                <span class="badge">O FAVORITO DOS PROFESSORES</span>
+                <img src="Gestão de Horarios Escolar.png" alt="Agenda Escola - Gestão de Horários">
+                <h3>Agenda Escola: Gestão de Horários e Turmas</h3>
+                <p>Simplifique sua rotina! Organize horários semanais, gerencie múltiplas escolas e controle seus créditos de aula em uma interface intuitiva e moderna feita para o dia a dia do professor.</p>
+                
+                <div class="price-container">
+                    <span class="price-old">De R$ 39,99</span>
+                    <span class="price-tag">Por R$ 19,99</span>
+                </div>
+                
+                <a href="https://go.hotmart.com/H105269836N?dp=1" target="_blank" class="btn-comprar">Simplificar Rotina Agora</a>
+                <div class="guarantee-text">🛡️ Acesso imediato via Hotmart</div>
+            </div>
+
+            <div class="card reveal">
+                <span class="badge">GAMIFICAÇÃO EXCLUSIVA</span>
+                <img src="Rank Financeiro.jpg" alt="Rank Financeiro">
+                <h3>Rank Financeiro: Evolua sua Economia</h3>
+                <p>Transforme suas metas financeiras em um jogo de poder. Suba da Formiga ao Tiranossauro Rex com um sistema de níveis épico, interface neon imersiva e feedback motivacional com IA.</p>
+                
+                <div class="price-container">
+                    <span class="price-old">De R$ 39,99</span>
+                    <span class="price-tag">Por R$ 19,99</span>
+                </div>
+                
+                <a href="https://pay.hotmart.com/U105282623T" target="_blank" class="btn-comprar">Dominar Metas</a>
+                <div class="guarantee-text">🦖 Torne-se o predador do seu saldo</div>
+            </div>
+        </div>
+
+        <section class="reveal">
+            <div class="section-header">
+                <h2>O que dizem nossos usuários</h2>
+            </div>
+            <div class="social-proof">
+                <div class="testimonial-card">
+                    "O Agenda Escola salvou minhas manhãs. Consigo ver exatamente qual escola preciso ir e quantos créditos ainda tenho." 
+                    <br><strong>— Prof. Carlos A.</strong>
+                </div>
+                <div class="testimonial-card">
+                    "O Rank Financeiro é viciante! Finalmente consegui guardar dinheiro porque queria 'upar' de nível."
+                    <br><strong>— Mariana L.</strong>
+                </div>
+                <div class="testimonial-card">
+                    "Suporte excelente e o app no Android é muito fluido. Recomendo demais!"
+                    <br><strong>— Thiago S.</strong>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="about-container">
+                <img src="Minha foto.png" alt="Marconi Gomes" class="about-photo">
+                <div class="about-text">
+                    <h3>A Mente por trás do Código</h3>
+                    <p>Eu sou o <strong>Marconi</strong>, desenvolvedor focado em soluções que unem pedagogia e tecnologia. Com experiência no sistema escolar, criei ferramentas que realmente entendem a dor de quem está no campo de batalha, seja na sala de aula ou na gestão pessoal.</p>
+                    <p>Cada app da Fábrica de Apps.Dev é construído com foco em performance e uma estética que inspira progresso.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="reveal">
+            <div class="section-header">
+                <h2>Dúvidas Frequentes</h2>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">O acesso é vitalício? <i class="fas fa-plus"></i></div>
+                    <div class="faq-answer"><p>Sim! Uma vez adquirido, o app é seu para sempre, com todas as atualizações futuras incluídas.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Funciona em qualquer Android? <i class="fas fa-plus"></i></div>
+                    <div class="faq-answer"><p>Sim, os apps são otimizados para funcionar desde versões mais antigas até os aparelhos mais modernos.</p></div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">Como recebo o link? <i class="fas fa-plus"></i></div>
+                    <div class="faq-answer"><p>Imediatamente após a compra, a Hotmart envia um e-mail com os dados de acesso e o link de download.</p></div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="reveal">
+            <div class="footer-logo">Fábrica de Apps<span>.Dev</span></div>
+            <p class="footer-tagline">Desenvolvendo soluções que impulsionam sua produtividade e faturamento. Siga e entre em contato para novidades e suporte.</p>
+            
+            <div class="contact-links">
+                <a href="https://www.instagram.com/fabricadeapps.dev/" target="_blank" class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    Fabrica de Apps.dev
+                </a>
+                
+                <a href="mailto:fabricadeapps100@gmail.com?subject=Dúvida/Suporte - Fábrica de Apps.Dev" class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    fabricadeapps100@gmail.com
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <div id="imageModal" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); align-items:center; justify-content:center; cursor:zoom-out;" onclick="this.style.display='none'">
+        <img id="modalImg" style="max-width:90%; max-height:90%; border-radius:15px; box-shadow:0 0 30px var(--neon-green);">
+        <div style="position:absolute; top:20px; right:30px; color:white; font-size:40px; font-weight:bold; cursor:pointer;">&times;</div>
+    </div>
+
+    <script>
+        // Lógica de Revelar ao scroll (Sua original)
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var i = 0; i < reveals.length; i++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[i].getBoundingClientRect().top;
+                var elementVisible = 150;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[i].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal();
+
+        // NOVA Lógica do FAQ
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const answer = item.nextElementSibling;
+                const icon = item.querySelector('i');
+                
+                if (answer.style.maxHeight && answer.style.maxHeight !== '0px') {
+                    answer.style.maxHeight = '0px';
+                    answer.style.paddingBottom = '0px';
+                    icon.classList.replace('fa-minus', 'fa-plus');
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.style.paddingBottom = '20px';
+                    icon.classList.replace('fa-plus', 'fa-minus');
+                }
+            });
+        });
+
+        // LÓGICA PARA VER IMAGEM DE PERTO
+        document.querySelectorAll('.card img').forEach(img => {
+            img.addEventListener('click', () => {
+                const modal = document.getElementById('imageModal');
+                const modalImg = document.getElementById('modalImg');
+                modal.style.display = 'flex';
+                modalImg.src = img.src;
+            });
+        });
+    </script>
+</body>
+</html>
